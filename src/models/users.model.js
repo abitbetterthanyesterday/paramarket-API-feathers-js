@@ -17,6 +17,7 @@ module.exports = function (app) {
         table.string('email').unique();
         table.string('password');
         table.string('country');
+        table.timestamp('created_at').defaultTo(knex.fn.now())
       })
         .then(() => console.log(`Created ${tableName} table`))
         .catch(e => console.error(`Error creating ${tableName} table`, e));
