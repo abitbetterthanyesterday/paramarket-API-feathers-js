@@ -12,15 +12,11 @@ module.exports = function (app) {
     if(!exists) {
       db.schema.createTable(tableName, table => {
         table.increments('id');
-      
+        table.string('first_name');
+        table.string('last_name');
         table.string('email').unique();
         table.string('password');
-      
-      
-        table.string('googleId');
-      
-        table.string('facebookId');
-      
+        table.string('country');
       })
         .then(() => console.log(`Created ${tableName} table`))
         .catch(e => console.error(`Error creating ${tableName} table`, e));
