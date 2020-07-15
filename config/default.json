@@ -45,7 +45,5 @@
     }
   },
   "mysql": {
-    "client": "mysql2",
-    "connection": "mysql://root:@localhost:3306/api_paramarket"
   }
 }
