@@ -7,7 +7,6 @@
 module.exports = function (app) {
   const db = app.get('knexClient');
   const tableName = 'users';
-  
   db.schema.hasTable(tableName).then(exists => {
     if(!exists) {
       db.schema.createTable(tableName, table => {
@@ -17,6 +16,8 @@ module.exports = function (app) {
         table.string('email').unique();
         table.string('password');
         table.string('country');
+        table.boolean('is_admin').defaultTo('false');
+        table.timestamps(false,true);
       })
         .then(() => console.log(`Created ${tableName} table`))
         .catch(e => console.error(`Error creating ${tableName} table`, e));
