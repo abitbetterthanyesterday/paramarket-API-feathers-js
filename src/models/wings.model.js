@@ -11,7 +11,19 @@ module.exports = function (app) {
     if(!exists) {
       db.schema.createTable(tableName, table => {
         table.increments('id');
-        table.string('text');
+        table.string('brand');
+        table.string('model');
+        table.integer('weight_range_min');
+        table.integer('weight_range_max');
+        table.integer('hours');
+        table.string('description');
+        table.string('condition');
+        table.string('country');
+        table.string('town');
+        table.integer('seller_id');
+        table.boolean('certified');
+        table.boolean('sold').defaultTo('false');
+        table.timestamps(false,true); 
       })
         .then(() => console.log(`Created ${tableName} table`))
         .catch(e => console.error(`Error creating ${tableName} table`, e));
