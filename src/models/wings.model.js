@@ -13,6 +13,7 @@ module.exports = function (app) {
         table.increments('id');
         table.string('brand');
         table.string('model');
+        table.float('size');
         table.integer('weight_range_min');
         table.integer('weight_range_max');
         table.integer('hours');
@@ -21,6 +22,7 @@ module.exports = function (app) {
         table.string('country');
         table.string('town');
         table.integer('seller_id');
+        table.integer('price');
         table.boolean('certified');
         table.boolean('sold').defaultTo('false');
         table.timestamps(false,true); 
