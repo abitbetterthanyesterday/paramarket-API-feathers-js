@@ -1,15 +1,8 @@
 const { authenticate } = require('@feathersjs/authentication').hooks;
 const { fastJoin } = require('feathers-hooks-common');
-
-
-// const sellerResolvers = {
-//   joins: {
-//     seller: (...args) => async (post, context) => wing.seller_id = (await context.app.service('/users').find({
-//       query: { id: wing.seller_id },
-//       paginate: false
-//     }))[0],
-//   }
-// };
+const {
+  hashPassword, protect
+} = require('@feathersjs/authentication-local').hooks;
 
 
 const sellerResolvers = {
@@ -38,7 +31,9 @@ module.exports = {
 
   after: {
     //Join the seller details.
-    all: [ fastJoin(sellerResolvers)],
+    all: [ fastJoin(sellerResolvers),       // Make sure the password field is never sent to the client
+      // Always must be the last hook
+      protect('seller.password')],
     find: [],
     get: [],
     create: [],
