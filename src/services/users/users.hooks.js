@@ -1,8 +1,18 @@
 const { authenticate } = require('@feathersjs/authentication').hooks;
-
+const { fastJoin, discard} = require('feathers-hooks-common');
 const {
   hashPassword, protect
 } = require('@feathersjs/authentication-local').hooks;
+
+
+const wingsResolver = {
+  joins: {
+    seller: (...args) => async (user, context) => user.ads = (await context.app.service('/wings').find({ query: {
+      // $select: [ 'brand' ],
+      seller_id: user.id
+    } }))
+  }
+};
 
 module.exports = {
   before: {
@@ -17,12 +27,17 @@ module.exports = {
 
   after: {
     all: [ 
+
       // Make sure the password field is never sent to the client
       // Always must be the last hook
       protect('password')
     ],
     find: [],
-    get: [],
+    get: [fastJoin(wingsResolver), 
+      //Hide the seller information.
+      context => {
+        context.result.ads.data.map(ad => delete ad.seller);
+      }],
     create: [],
     update: [],
     patch: [],
