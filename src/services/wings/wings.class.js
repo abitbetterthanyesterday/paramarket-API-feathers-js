@@ -7,13 +7,4 @@ exports.Wings = class Wings extends Service {
       name: 'wings'
     });
   }
-
-    async find(params){
-      console.log(params);
-    return super.find(params);
-  }
-
-  // create(data,params){
-    // return super.create(data,params);
-  // }
 };

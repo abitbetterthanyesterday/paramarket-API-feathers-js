@@ -30,12 +30,12 @@ module.exports = {
   },
 
   after: {
-    //Join the seller details.
-    all: [ fastJoin(sellerResolvers),       // Make sure the password field is never sent to the client
+    all: [ 
+      // Make sure the password field is never sent to the client
       // Always must be the last hook
       protect('seller.password')],
-    find: [],
-    get: [],
+    find: [fastJoin(sellerResolvers),protect('seller.password')],
+    get: [fastJoin(sellerResolvers),protect('seller.password')],
     create: [],
     update: [],
     patch: [],
