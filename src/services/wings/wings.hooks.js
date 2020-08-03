@@ -1,4 +1,24 @@
 const { authenticate } = require('@feathersjs/authentication').hooks;
+const { fastJoin } = require('feathers-hooks-common');
+
+
+// const sellerResolvers = {
+//   joins: {
+//     seller: (...args) => async (post, context) => wing.seller_id = (await context.app.service('/users').find({
+//       query: { id: wing.seller_id },
+//       paginate: false
+//     }))[0],
+//   }
+// };
+
+
+const sellerResolvers = {
+  joins: {
+    seller: (...args) => async (wing, context) => wing.seller = (await context.app.service('/users').find({ query: {
+      id: wing.seller_id
+    } })).data[0]
+  }
+};
 
 module.exports = {
   before: {
@@ -17,7 +37,8 @@ module.exports = {
   },
 
   after: {
-    all: [],
+    //Join the seller details.
+    all: [ fastJoin(sellerResolvers)],
     find: [],
     get: [],
     create: [],
