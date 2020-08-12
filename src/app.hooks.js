@@ -1,3 +1,4 @@
+const isAdmin = require('./hooks/is-admin');
 // Application hooks that run for every service
 
 module.exports = {
@@ -8,7 +9,7 @@ module.exports = {
     create: [],
     update: [],
     patch: [],
-    remove: []
+    remove: [isAdmin()]
   },
 
   after: {
